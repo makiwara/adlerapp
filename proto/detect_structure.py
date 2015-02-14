@@ -3,6 +3,8 @@ import sys;reload(sys);sys.setdefaultencoding('utf-8');
 import os
 import sys
 
+from structure import ProtoText, init_struct
+
 structures_input = {
         # is_milestone, level, title
     '1.txt': [
@@ -12,14 +14,14 @@ structures_input = {
         [True,  1, u'Часть I. Чтение как деятельность'],
         [True,  2, u'Глава первая. Обычному читателю'],
         [True,  2, u'Глава вторая. Прочтение слова «чтение»'],
-        [True,  2, u'Глава третья. Чтение — это учёба'],
+        [True,  2, u'Глава третья. Чтение — это учеба'],
         [True,  2, u'Глава четвертая. Учителя: одушевленные и неодушевленные'],
         [True,  2, u'Глава пятая. Несостоятельность школ'],
         [True,  2, u'Глава шестая. О самосовершенствовании'],
         [True,  1, u'Часть II. Правила'],
         [True,  2, u'Глава седьмая. От множества правил к единому навыку'],
         [True,  2, u'Глава восьмая. Ориентируйтесь по названию'],
-        [True,  2, u'Глава девятая. Разглядите скелет'],
+        [True,  2, u'Глава девятая. Разглядите «скелет»'],
         [True,  2, u'Глава десятая. Найдите общий язык'],
         [True,  2, u'Глава одиннадцатая. Каковы утверждения?'],
         [True,  2, u'Глава двенадцатая. Этикет интеллектуальной беседы'],
@@ -89,54 +91,14 @@ structures_input = {
 }
 
 
-class ProtoStructure:
-    def __init__(self, title='', level=1, is_milestone=True, parent=None):
-        self.title = title
-        self.level = level
-        self.is_milestone = is_milestone
-        self.parent = parent
-        self.children = []
-        self.start = 0
-        self.end   = 0
-
-    @property
-    def last_child(self):
-        if len(self.children) > 0:
-            return self.children[ len(self.children)-1 ]
-        else:
-            return self
-
-    def add_child(self, child):
-        child.parent = self
-        child.level  = self.level+1
-        self.children.append(child)
-
-    def out(self):
-        print ''.join([
-            (''.ljust(self.level*4, ' ')+self.title).ljust(120, '.'),
-            '*'if self.is_milestone else ' ',
-            ])
-        [x.out() for x in self.children]
-
-
-def init_struct(title, data):
-    items = [ ProtoStructure(title=x[2], level=x[1], is_milestone=x[0]) for x in data ]
-    root = ProtoStructure(title=title, level=0)
-    parent = root
-    for item in items:
-        if item.level <= parent.level:
-            parent = parent.parent
-        if item.level > parent.level+1:
-            parent = parent.last_child
-        parent.add_child(item)
-    return root
-
-
-
 
 ###### ----------
-s1 = init_struct(u'Мортимер Адлер, Как читать книги', structures_input['1.txt'])
-s2 = init_struct(u'Лев Выготский, Мышление и речь', structures_input['2.txt'])
+s1 = init_struct(u'Мортимер Адлер. Как читать книги', structures_input['1.txt'])
+s2 = init_struct(u'Лев Семенович Выготский. Мышление и речь', structures_input['2.txt'])
+
+t1 = ProtoText('../bookdata/1.txt', s1)
+t2 = ProtoText('../bookdata/2.txt', s2)
+
 
 print
 print
@@ -153,3 +115,4 @@ print
 print '======================================='
 print
 s2.out()
+
