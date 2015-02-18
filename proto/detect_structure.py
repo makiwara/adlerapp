@@ -3,6 +3,8 @@ import sys;reload(sys);sys.setdefaultencoding('utf-8');
 import os
 import sys
 
+from pprint import pprint
+
 from structure import ProtoText, init_struct
 
 structures_input = {
@@ -94,25 +96,26 @@ structures_input = {
 
 ###### ----------
 s1 = init_struct(u'Мортимер Адлер. Как читать книги', structures_input['1.txt'])
-s2 = init_struct(u'Лев Семенович Выготский. Мышление и речь', structures_input['2.txt'])
+#s2 = init_struct(u'Лев Семенович Выготский. Мышление и речь', structures_input['2.txt'])
 
 t1 = ProtoText('../bookdata/1.txt', s1)
-t2 = ProtoText('../bookdata/2.txt', s2)
+#t2 = ProtoText('../bookdata/2.txt', s2)
 
+lines = [
+    u'итатель великих произведений постепенно уступает место потребителю информации, который, словно в чужую обитель, входит в текст и тут же выходит, не задержавшись, чтобы подхватить протянутые',
+    u'Теперь кто-то списывает, кто-то скачивает, кто-то копирует, получая знания схоластически.',
+    u'Как высвободить, подобно тому, о чем писал И. А. Ильин в книге «Возвращение», всю силу душевных способностей и умений, чтобы найти верную духовную установку и приобрести дар «художественного ясновидения» для понимания произведения?',
+    u'Чтение — средство коммуникации: книга помогает установить между автором и читателем диалог, направляющий, как говорил Сократ, в поисках истины.',
+]
+structs = [ s1, s1, s1, s1 ]
 
-print
-print
-print
-print
-print
-print
-print
-print
-print
-print
-s1.out()
-print
-print '======================================='
-print
-s2.out()
+quotes = [s.find_quote(l, limit=5) for l,s in zip( lines, structs )]
+
+[[x.extend(left=True, right=True) for x in y] for y in quotes]
+
+[[x.out() for x in y] for y in quotes]
+
+# s1.out()
+# print '======================================='
+# s2.out()
 
