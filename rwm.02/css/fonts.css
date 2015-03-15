@@ -1,0 +1,47 @@
+@font-face {
+  font-family: PTSans;
+  src: url(chrome://theme/IDR_FONT_PT_SANS_REGULAR);
+}
+
+@font-face {
+  font-family: PTSans;
+  src: url(chrome://theme/IDR_FONT_PT_SANS_ITALIC);
+  font-style: italic;
+}
+
+@font-face {
+  font-family: PTSans;
+  src: url(chrome://theme/IDR_FONT_PT_SANS_BOLD);
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: PTSans;
+  src: url(chrome://theme/IDR_FONT_PT_SANS_BOLD_ITALIC);
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: PTSerif;
+  src: url(chrome://theme/IDR_FONT_PT_SERIF_REGULAR);
+}
+
+@font-face {
+  font-family: PTSerif;
+  src: url(chrome://theme/IDR_FONT_PT_SERIF_ITALIC);
+  font-style: italic;
+}
+
+@font-face {
+  font-family: PTSerif;
+  src: url(chrome://theme/IDR_FONT_PT_SERIF_BOLD);
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: PTSerif;
+  src: url(chrome://theme/IDR_FONT_PT_SERIF_BOLD_ITALIC);
+  font-weight: bold;
+  font-style: italic;
+}

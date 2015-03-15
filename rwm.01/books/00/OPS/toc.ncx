@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1" xml:lang="ru">
+<head>
+<meta name="dtb:uid" content="urn:uuid:d6a1b140-ef94-4d39-8c1c-6afc0fd2b956"/>
+<meta name="dtb:depth" content="4"/>
+<meta name="dtb:totalPageNumber" content="0"/>
+<meta name="dtb:maxPageNumber" content="0"/>
+</head>
+<docTitle><text>Как читать книги. Руководство по чтению великих произведений</text></docTitle>
+<navMap>
+<navPoint playOrder="1" id="id1">
+<navLabel>
+<text>Мортимер Адлер Как читать книги. Руководство по чтению великих произведений</text>
+</navLabel>
+<content src="ch1.xhtml#id1"/>
+<navPoint playOrder="2" id="id2">
+<navLabel>
+<text>Предисловие</text>
+</navLabel>
+<content src="ch1.xhtml#id2"/>
+</navPoint>
+<navPoint playOrder="3" id="id3">
+<navLabel>
+<text>От издателей</text>
+</navLabel>
+<content src="ch1.xhtml#id3"/>
+</navPoint>
+<navPoint playOrder="4" id="id4">
+<navLabel>
+<text>От автора</text>
+</navLabel>
+<content src="ch1.xhtml#id4"/>
+</navPoint>
+<navPoint playOrder="5" id="id5">
+<navLabel>
+<text>Часть I. Чтение как деятельность</text>
+</navLabel>
+<content src="ch1-1.xhtml#id5"/>
+<navPoint playOrder="6" id="id6">
+<navLabel>
+<text>Глава первая. Обычному читателю</text>
+</navLabel>
+<content src="ch1-2.xhtml#id6"/>
+</navPoint>
+<navPoint playOrder="7" id="id7">
+<navLabel>
+<text>Глава вторая. Прочтение слова «чтение»</text>
+</navLabel>
+<content src="ch1-3.xhtml#id7"/>
+</navPoint>
+<navPoint playOrder="8" id="id8">
+<navLabel>
+<text>Глава третья. Чтение — это учеба</text>
+</navLabel>
+<content src="ch1-4.xhtml#id8"/>
+</navPoint>
+<navPoint playOrder="9" id="id9">
+<navLabel>
+<text>Глава четвертая. Учителя: одушевленные и неодушевленные</text>
+</navLabel>
+<content src="ch1-5.xhtml#id9"/>
+</navPoint>
+<navPoint playOrder="10" id="id10">
+<navLabel>
+<text>Глава пятая. Несостоятельность школ</text>
+</navLabel>
+<content src="ch1-6.xhtml#id10"/>
+</navPoint>
+<navPoint playOrder="11" id="id11">
+<navLabel>
+<text>Глава шестая. О самосовершенствовании</text>
+</navLabel>
+<content src="ch1-8.xhtml#id11"/>
+</navPoint>
+</navPoint>
+<navPoint playOrder="12" id="id12">
+<navLabel>
+<text>Часть II. Правила</text>
+</navLabel>
+<content src="ch1-9.xhtml#id12"/>
+<navPoint playOrder="13" id="id13">
+<navLabel>
+<text>Глава седьмая. От множества правил к единому навыку</text>
+</navLabel>
+<content src="ch1-10.xhtml#id13"/>
+</navPoint>
+<navPoint playOrder="14" id="id14">
+<navLabel>
+<text>Глава восьмая. Ориентируйтесь по названию</text>
+</navLabel>
+<content src="ch1-11.xhtml#id14"/>
+</navPoint>
+<navPoint playOrder="15" id="id15">
+<navLabel>
+<text>Глава девятая. Разглядите «скелет»</text>
+</navLabel>
+<content src="ch1-12.xhtml#id15"/>
+</navPoint>
+<navPoint playOrder="16" id="id16">
+<navLabel>
+<text>Глава десятая. Найдите общий язык</text>
+</navLabel>
+<content src="ch1-13.xhtml#id16"/>
+</navPoint>
+<navPoint playOrder="17" id="id17">
+<navLabel>
+<text>Глава одиннадцатая. Каковы утверждения?</text>
+</navLabel>
+<content src="ch1-14.xhtml#id17"/>
+</navPoint>
+<navPoint playOrder="18" id="id18">
+<navLabel>
+<text>Глава двенадцатая. Этикет интеллектуальной беседы</text>
+</navLabel>
+<content src="ch1-15.xhtml#id18"/>
+</navPoint>
+<navPoint playOrder="19" id="id19">
+<navLabel>
+<text>Глава тринадцатая. Что может сказать читатель</text>
+</navLabel>
+<content src="ch1-16.xhtml#id19"/>
+</navPoint>
+<navPoint playOrder="20" id="id20">
+<navLabel>
+<text>Глава четырнадцатая. И снова правила</text>
+</navLabel>
+<content src="ch1-17.xhtml#id20"/>
+</navPoint>
+</navPoint>
+<navPoint playOrder="21" id="id21">
+<navLabel>
+<text>Часть III. Другие стороны жизни читателя</text>
+</navLabel>
+<content src="ch1-18.xhtml#id21"/>
+<navPoint playOrder="22" id="id22">
+<navLabel>
+<text>Глава пятнадцатая. Вторая половина</text>
+</navLabel>
+<content src="ch1-19.xhtml#id22"/>
+</navPoint>
+<navPoint playOrder="23" id="id23">
+<navLabel>
+<text>Глава шестнадцатая. Великие книги</text>
+</navLabel>
+<content src="ch1-20.xhtml#id23"/>
+</navPoint>
+<navPoint playOrder="24" id="id24">
+<navLabel>
+<text>Глава семнадцатая. Свободный ум и свободные граждане</text>
+</navLabel>
+<content src="ch1-22.xhtml#id24"/>
+</navPoint>
+</navPoint>
+<navPoint playOrder="25" id="id25">
+<navLabel>
+<text>Приложение 1. Великие книги</text>
+</navLabel>
+<content src="ch1-23.xhtml#id25"/>
+</navPoint>
+<navPoint playOrder="26" id="id26">
+<navLabel>
+<text>Приложение 2. 102 великие идеи человечества</text>
+</navLabel>
+<content src="ch1-23.xhtml#id26"/>
+</navPoint>
+<navPoint playOrder="27" id="id27">
+<navLabel>
+<text>Об авторе</text>
+</navLabel>
+<content src="ch1-23.xhtml#id27"/>
+</navPoint>
+<navPoint playOrder="28" id="id28">
+<navLabel>
+<text>Именной указатель</text>
+</navLabel>
+<content src="ch1-23.xhtml#id28"/>
+</navPoint>
+</navPoint>
+<navPoint playOrder="29" id="id29">
+<navLabel>
+<text>Максимально полезные книги от издательства «Манн, Иванов и Фербер»</text>
+</navLabel>
+<content src="ch1-24.xhtml#id29"/>
+</navPoint>
+</navMap>
+</ncx>

@@ -2,3 +2,5 @@
 *.pyc
 
 proto/t.txt
+
+db/
