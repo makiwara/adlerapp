@@ -1,0 +1,79 @@
+html, body { padding: 0; margin: 0; border: 0; overflow:hidden }
+body {
+    background: #d1d0c0;
+}
+.reader {
+    position:absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    box-sizing: border-box;
+    padding: 0px;
+    margin-left: 50%;
+}
+.reader-pages {
+    width: 100%; 
+    height:100%;
+}
+.reader-page {
+    background: #ffffff;
+    float: left;
+}
+TEMP.reader-page {
+    float: left;
+    width: 400px;
+    height: 500px;
+    background: #ffffff;
+    box-shadow: 0 1px 2px rgba(0,0,0, 0.25);
+    margin: 20px
+}
+.reader-blank {
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    display: none;
+}
+.reader-chat { display: none; }
+.reader-chat, .reader-iframe {
+    border: 0;
+    padding: 0;
+}
+.reader-switch-blank .reader-iframe { display: none }
+.reader-switch-blank .reader-blank  { display: block }
+.reader-switch-chat .reader-iframe  { display: none }
+.reader-switch-chat .reader-chat    { display: block }
+
+.reader-flipper {
+    height: 100%;
+    position: absolute;
+    overflow: hidden;
+}
+.reader-flipper div {
+    width: 300px; 
+    height: 300px;
+    border-radius: 300px;
+    margin-top: -150px;
+    background: #000000;
+    opacity: 0.1;
+}
+.reader-flipper-left div {
+    float: right;
+    margin-right: -250px;
+}
+.reader-flipper-right div {
+    float: left;
+    margin-left: -250px;
+}
+.reader-flipper:hover div {
+    opacity: 0.25;
+    margin-right: -200px;
+    margin-left: -200px;
+}
+
+.reader-chat-html { width: 100%; height: 100% }
+.reader-chat-html body { 
+    width: 100%;
+    height: 100%;
+    background: yellow;
+}
