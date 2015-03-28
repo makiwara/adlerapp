@@ -3,7 +3,7 @@ Reading With Mortimer, Act IV
 
 Next steps
 ----------
-* Think angular
+* Think angular/reactjs
 * Design chat
 * Implement chat
 
@@ -14,3 +14,4 @@ Minor wishes
 * page flipping transformations
 * introduce text styles
 * scrubber
+

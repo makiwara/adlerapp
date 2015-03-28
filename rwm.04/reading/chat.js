@@ -3,6 +3,13 @@ function( $,        Place ) {
 
     CSS_MARKER = '.CHAT';
 
+    /* *****************************************************************************************
+     *
+     *  Chat and Room classes: stubs at the moment.
+     *                         These classes are intended to contain chat engine for the book
+     *                         and particular room instances in the book.
+     */
+
     var Chat = function(reader) {
         this.reader = reader;
         this.chats = [];
@@ -27,7 +34,6 @@ function( $,        Place ) {
                     result[ result.length ] = this.chats[i];
             return result;
         },
-
         attachTo: function(page, place) {
             this._page = page;
             this._place = place || this._page.place;

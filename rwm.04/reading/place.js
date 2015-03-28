@@ -1,5 +1,12 @@
 define([ "jquery" ],
 function( $ ) { 
+
+    /* *****************************************************************************************
+     *
+     *  Place class: to containt position in a book and to operate via component/page 
+     *               structure of the book
+     */
+
     var Place = function(book) {
         this.book = book;
         this.componentNo = 0;

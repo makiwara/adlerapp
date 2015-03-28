@@ -1,6 +1,10 @@
 define([ "jquery", "reading/page", "reading/book", "reading/place", "reading/chat" ],
 function( $,        Page,           Book,           Place,           Chat ) { 
 
+    /* *****************************************************************************************
+     *
+     *  Reader class: main one to create and initialise the reader 
+     */
     var Reader = function($host, book) {
         this.$host = $host;
         this.book = book;
@@ -9,25 +13,24 @@ function( $,        Page,           Book,           Place,           Chat ) {
         this.chat  = new Chat(this);
         this.isFrozen = false;
         this._resizeTimeout = false;
-        // Init ========
         this.bind();
         this.rebuild();
     }
     Reader.prototype = {
-        // =============================  то, что касается ресайза ==============================
+        // ============================= RESIZE RELATED ROUTINES ==============================
         bind: function() {
             var that = this;
             $(window).resize(function(){
                 if (that.isFrozen) return;
-                // TODO плавные анимации с закрытие книжки сделать
+                // TODO provide smooth animation of book folding
                 clearTimeout(that._resizeTimeout)
                 that._resizeTimeout = setTimeout(function(){ that.resize() }, 500);
             })
         },
         resize: function() {
             this.resizeTimeout = false;
-            // TODO плавные анимации обратно
-            var depth = /*this._resizeDepth ||*/ this.place.getComponentDepth()
+            // TODO provide smooth animation of book unfolding back
+            var depth = this._resizeDepth || this.place.getComponentDepth()
             this.rebuild()
             this.flipSetup(this.place.copy().setComponentDepth(depth))
             this._resizeDepth = depth;
@@ -35,7 +38,7 @@ function( $,        Page,           Book,           Place,           Chat ) {
         freeze: function()   { this.isFrozen = true  },
         unfreeze: function() { this.isFrozen = false },
 
-        // =============== произвольное перемещение ============================
+        // =============== NAVIGATE TO CERTAIN CHAPTER BY URL ================================
         navigate: function(url) {
             var that = this;
             var componentNo = this.book.findComponentNoByUrl(url);
@@ -56,20 +59,21 @@ function( $,        Page,           Book,           Place,           Chat ) {
             }      
             return false;     
         },
-        // =========================== перелистывание ==========================
+        // =========================== PAGE FLIPPING ROUTINES ===============================
         isBeginning: function() {
             return this.pages[0].place.isBeginning();
         },
         isEnd: function() {
             return this.pages[this.pages.length-1].place.isEnd();
         },
+        // Opens the book on place given
         flipSetup: function( fromPlace ) {
             this._resizeDepth = false;
-            if (this.pages.length == 1) { // компактный режим: только одна страница ------
+            if (this.pages.length == 1) { // one-pane mode
                 this.pages[0].setPlace(fromPlace);
                 this.place = fromPlace;
             }
-            if (this.pages.length == 2) { // развёрнутые две страницы --------------------
+            if (this.pages.length == 2) { // two-pane mode
                 this.pages[0].setPlace(fromPlace);
                 if (this.chat.getChats(fromPlace).length) {
                     this.pages[1].setPlace(fromPlace);
@@ -80,10 +84,11 @@ function( $,        Page,           Book,           Place,           Chat ) {
                 this.place = fromPlace;
             }
         },
+        // Flips the book +1/-1 page forth or back
         flip: function( dir ) {
-            this._resizeDepth = false
+            this._resizeDepth = false; // reset depth stored for resize
             // ---------------------------------------------------------------------------
-            if (this.pages.length == 1) { // компактный режим: только одна страница ------
+            if (this.pages.length == 1) { // one-pane mode
                 var that = this;
                 var next = function(dir) {
                     var nextPlace = page.place.copy(dir);
@@ -91,76 +96,81 @@ function( $,        Page,           Book,           Place,           Chat ) {
                     that.pages[0].setPlace(nextPlace);
                 }
                 var page = this.pages[0];
-                if (dir >= 0) { // движемся вперёд =======================================
-                    if (this.chat.getChats(page.place).length) { // тут есть чат!
-                        if (!page.isChat()) { // остаёмся там же, открываем чат
+                if (dir >= 0) { // one-pane, flip forward ................................
+                    if (this.chat.getChats(page.place).length) { // chat's here
+                        if (!page.isChat()) { // just open the chat
                             this.chat.attachTo(page);
-                        } else { // надо листать дальше, раз просят
+                        } else { // just flip
                             next(+1)
                         }
                     } else {
                         next(+1)
                     }
-                } else { // движемся назад ===============================================
-                    if (this.chat.getChats(page.place).length) { // тут есть чат!
-                        if (page.isChat()) { // никуда не листаем, но уберём чат
+                } else { // one-pane, flip backward ......................................
+                    if (this.chat.getChats(page.place).length) { // chat's open
+                        if (page.isChat()) { // just hide chat
                             flip = false;
                             this.pages[0].setPlace(page.place);
-                        } else {
+                        } else { // try to flip
                             if (next(-1)) return;
-                            if (this.chat.getChats(that.pages[0]).length) { // будет чат
+                            if (this.chat.getChats(that.pages[0]).length) { 
+                                // show chat first, if it's here
                                 this.chat.attachTo(page);
                             }
                         }
-                    } else { // чата тут нет, просто листаем
-                        next(-1)                       
+                    } else { // no chat, just flip
+                        if (next(-1))
+                        if (this.chat.getChats(that.pages[0]).length) { 
+                            // show chat first, if it's here
+                            this.chat.attachTo(page);
+                        }
                     }
                 }
             }
             // ---------------------------------------------------------------------------
             // ---------------------------------------------------------------------------
-            if (this.pages.length == 2) { // развёрнутые две страницы --------------------
+            if (this.pages.length == 2) { // two pane mode
                 var pageLeft  = this.pages[0];
                 var pageRight = this.pages[1];
                 var nextLeft, nextRight;
                 var showChat = false;     
-                if (dir >= 0) { // движемся вперёд =======================================
+                if (dir >= 0) { // two-pane, flipping forward ............................
                     if (!pageRight.isChat() &&
-                        this.chat.getChats(pageRight.place).length) { // справа-то чат был
+                        this.chat.getChats(pageRight.place).length) { // chat's here
                         nextRight = nextLeft = pageRight.place;
                         showChat = true;
                     } else {
                         nextLeft = pageRight.place.copy(dir);
                         if (nextLeft.isBeyond()) return;
-                        if (this.chat.getChats(nextLeft).length) { // в новой левой чат ..
+                        if (this.chat.getChats(nextLeft).length) { // chat's on left? 
                             nextRight = nextLeft;
                             showChat = true;
-                        } else { // в новой левой нет чата, правая обычная ...............
+                        } else { // no chat on left or right 
                             nextRight = nextLeft.copy(1);
                         }
                     }
-                } else { // движемся назад ===============================================
-                    if (!pageRight.isChat()) { // чата на экране нет, просто листаем .....
+                } else { // two-pane, flipping backward ..................................
+                    if (!pageRight.isChat()) { // no chat here, just flip
                         nextRight = pageLeft.place.copy(-1);
                         if (nextRight.isBeyond()) return;
-                        if (this.chat.getChats(nextRight).length) { // в новой есть чат!
+                        if (this.chat.getChats(nextRight).length) { // chat's incoming!
                             nextLeft = nextRight;
                             showChat = true;
-                        } else { // чата так и не будет после перелистывания
+                        } else { // no chat on new pages
                             nextLeft = nextRight.copy(-1);
                         }
-                    } else { // сейчас на экране показан чат .............................
+                    } else { // there is chat here
                         var nextLeft = pageLeft.place.copy(-2);
                         if (nextLeft.isBeyond() || this.chat.getChats(nextLeft).length) {
-                            // если новая левая содержит чаты или пустота
+                            // new left pane contains chat or is empty
                             nextLeft = pageLeft.place.copy(-1);
                             if (nextLeft.isBeyond()) return;
                             nextRight = pageLeft.place;
                         } else {
-                            // можно листнуть на левую страницу
+                            // we can flip left
                             var nextRight = pageLeft.place.copy(-1);
                             if (this.chat.getChats(nextRight).length) {
-                                // но правая содержит чат, значит она станет левой
+                                // but if right page has chat, move it to the left!
                                 nextLeft = nextRight;
                                 showChat = true;
                             }                          
@@ -175,8 +185,9 @@ function( $,        Page,           Book,           Place,           Chat ) {
             this.place = this.pages[0].place;
         },
 
-        // =========================== построение книжки =======================
-        prescan : function(geom) { // count pages and register chats
+        // =========================== RENDERING A BOOK ==================================
+        // count pages and register chats
+        prescan : function(geom) { 
             var place = new Place(this.book);
             var pageCount = 0;
             var that = this;
@@ -192,6 +203,7 @@ function( $,        Page,           Book,           Place,           Chat ) {
             });
             page.clean();
         },
+        // calculate page geometry: paddings, no of panes, flippers, etc.
         calculateGeometry: function() {
             var geom = { 
                 _proportion: [512,768],
@@ -237,14 +249,15 @@ function( $,        Page,           Book,           Place,           Chat ) {
             geom.marginHeight = ( h - geom.height ) / 2;
             return geom;
         },
+        // rebuild the open book from scratch (used after any resize)
         rebuild: function() {
             if (!this.$container)
                 this.$container = $('<div>').addClass('reader-pages').appendTo(this.$host);
-            // давайте считать странички
+            // let us count geometry and total pages in the book
             var geom = this.calculateGeometry();
             this.clean();
             this.prescan(geom);
-            // build up pages;
+            // build up pages
             var that = this;
             that.pages = [];
             if (geom.pageCount == 1) {
@@ -267,6 +280,7 @@ function( $,        Page,           Book,           Place,           Chat ) {
             }).removeClass('reader-2pane').removeClass('reader-1pane')
               .addClass('reader-'+geom.pageCount+'pane')
 
+            // render left-right flippers if there is a place for them
             if (geom.showFlippers) {
                 $('<div>').addClass('reader-flipper reader-flipper-left')
                           .prependTo(this.$container)
@@ -291,6 +305,7 @@ function( $,        Page,           Book,           Place,           Chat ) {
                 });
             }
         },
+        // clean up all content rendered in order to save memory and rebuild everything afterwars
         clean: function() {
             this.chat.clean();
             for (var i=0; i < this.pages.length; i++) {

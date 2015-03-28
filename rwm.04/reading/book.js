@@ -1,6 +1,12 @@
 define([ "jquery" ],
 function( $ ) { 
 
+    /* *****************************************************************************************
+     *
+     *  Book class: contains book data: spine, component contents and metadata.
+     *              provides API for accessing components and its content data-wise.
+     */
+
     var Book = function(data) {
         this.data = data;
         this.componentsMeta = [];

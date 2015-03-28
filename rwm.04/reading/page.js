@@ -1,6 +1,12 @@
 define([ "jquery" ],
 function( $ ) { 
 
+    /* *****************************************************************************************
+     *
+     *  Page class: visual display of a flipping page of a book; inside this page the book
+     *              content is rendered. Page logically contains the whole book component,
+     *              but displays only one ‘page’ of this component at the time.
+     */
     var Page = function(reader, $containter, geom, callback, isDouble, isRight) {
         this.reader = reader;
         this.$containter = $containter;
@@ -15,7 +21,7 @@ function( $ ) {
     }
     Page.prototype = {
 
-        // сделать так, чтобы страница показывала на новое место (любое)
+        // move page content to show the exact given place (anywhere in the book)
         setPlace: function( newPlace ) {
             var that = this;
             // visual state: blank or text
@@ -55,15 +61,16 @@ function( $ ) {
             this.place = newPlace;
         },
 
-        // делаем так, чтобы страница была пустой, с текстом или чат
+        // switch display mode of the page: text, blank, chat
         switchState: function(newState) {
             this.$page.removeClass('reader-switch-'+this.state)
                       .addClass('reader-switch-'+newState);
             this.state = newState;
         },
+        // check if it is chat
         isChat: function() { return this.state=='chat' },
 
-        // строим страницу: ифрейм, заглушку и потом чат
+        // update iframe styles after rebuilding it from scratch
         updateIframeStyles: function(body) {
             var padding = parseInt(this.pageWidth/10);
             var textWidth = this.pageWidth - 2*padding;
@@ -82,6 +89,7 @@ function( $ ) {
                 'overflow' : 'hidden'
             }).addClass('reader-text-style')
         },
+        // build page content: iframe, blank and chat panels
         build: function(geom, callback) {
             var that = this;
             var ready = false;
@@ -122,11 +130,13 @@ function( $ ) {
                 'height': geom.height                
             }))
         },
-        // сколько получилось у нас страниц в этом компоненте? 
-        // функция на самом деле используется при инициализации читалки (и при ресайзе)
+
+        // calculate page count for current book component
+        // this method is used in reader.prescan to estimate total page count for the book
         getPageCount: function() {
             return 1 + parseInt( this.$body.children().last().offset().left / this.pageWidth )
         },
+        // calculate page-wise positions of a certain markers ('a', '#p1ch2', '.CHAT')
         getAnchors: function(jQueryPath) { 
             var result = [];
             var that = this;
@@ -140,7 +150,7 @@ function( $ ) {
             })
             return result;
         },
-        // уничтожение страницы без следа
+        // remove all rendered content in order to save memory
         clean: function() {
             this.$page.remove();
             delete this.$page;
