@@ -1,0 +1,17 @@
+{
+  "name": "dataviz",
+  "version": "1.0.0",
+  "description": "First take on book dataviz",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "adler"
+  ],
+  "author": "Nikolay Yaremko",
+  "license": "MIT",
+  "dependencies": {
+    "merge": "^1.2.0"
+  }
+}
