@@ -1,0 +1,182 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Above Books Concept Map 02</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <!-- CSS concatenated and minified via ant build script-->
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- end CSS-->
+
+    <script src="js/libs/modernizr-2.0.6.min.js"></script>
+    <style> 
+    body {
+        background: #444444;
+        -webkit-transition: all 0.5s ease;        
+    }
+
+    .concept-title {
+        vertical-align: middle;
+        width: 100%;
+        margin-top: 32px;
+        -webkit-transition: all 0.5s ease;
+        cursor: pointer;
+    }
+    .concept-title:hover {
+        opacity: 1
+    }
+    .concept-title h1 {
+        margin: 0; padding: 0;
+        font: 32px/32px Acrom, sans-serif;
+        font-weight: 700;
+        text-transform: uppercase;
+        width: 100%; 
+        text-align: center;
+        color: #ffffff;
+    }
+    .concept-title h2 {
+        margin: 0; padding: 0;
+        margin-bottom: 18px;
+        font: 18px/32px Acrom, sans-serif;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #ffffff;
+        width: 100%; 
+        text-align: center;
+    }
+
+
+    .concept-bars {
+        height: 70px;
+        margin-bottom: -70px;
+        width: 50%;
+        padding-left: 50%;
+        overflow: hidden;
+    }    
+    .concept-bar {
+        position: absolute;
+        opacity: 0;
+        color: #ffffff;
+        -webkit-transition: all 0.5s ease;
+        width: 400px;
+        z-index: 5;
+    }
+    .concept-bar-text {
+        font: 18px/22px Acrom, sans-serif;
+        font-weight: 700;
+        text-align: center;
+        display: table-cell;
+        vertical-align: middle;
+        width: 400px;
+        height: 70px;     
+    }
+    .concept-bar-current {
+        opacity: 1;
+        z-index: 30;       
+    }
+    .concept-bar-current .concept-bar-text {
+        font-size: 22px;
+    }
+    .concept-bar-visible {
+        opacity: 0.5;
+        cursor: pointer;
+        z-index: 20;
+    }
+    .concept-bar-visible:hover {
+        opacity: 1;
+    }
+
+    .concept-bars-left,
+    .concept-bars-right {
+        position: absolute;
+        opacity: 1;
+        height: 70px;
+        z-index: 10;
+    }
+    .concept-bars-left {
+        left: 0; width: 50%;
+    }
+    .concept-bars-right {
+        right: 0; width: 50%;
+    }
+    .concept-bars-left-angle, .concept-bars-right-angle {
+        width: 1px; 
+        height: 1px;
+        display: none;
+        border-top: 10px solid rgba(0,0,0,0);
+        border-bottom: 10px solid rgba(0,0,0,0);
+        margin-top: 25px;
+        -webkit-transition: all 0.5s ease;
+    }
+    .concept-bars-left-angle {
+        border-right: 15px solid #ffffff;
+        cursor: pointer;
+        opacity: 0.5
+    }
+    .concept-bars-right-angle {
+        border-left: 15px solid #ffffff;
+        cursor: pointer;
+        opacity: 0.5
+    }
+    .concept-bars-left-angle:hover, .concept-bars-right-angle:hover { opacity: 1 }
+
+    
+    .concept-bubbles {
+        height: 500px;
+        -webkit-transition: all 0.5s ease;
+    }
+    .concept-bubbles-label {
+        position   : absolute;
+        font-family: Acrom, sans-serif;
+        font-weight: 700;
+        line-height: 1.2em;
+        text-align : center;
+        color      : #ffffff;
+        cursor     : pointer;
+    }
+    .concept-bubbles svg circle { 
+        opacity: 0.8;
+        cursor: pointer;
+    }
+    .concept-bubbles svg circle.concept-bubbles-selected { opacity: 1 }
+    </style>
+</head>
+
+<body>
+
+    <div id="bubblechart">       
+    </div>
+
+    <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script> -->
+    <script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.2.min.js"><\/script>')</script>
+
+    <script defer src="js/plugins.js"></script>
+    <script src="js/libs/d3.js"></script>
+    <script src="data/lectures.js"></script>
+    <script src="js/model.js"></script>
+    <script src="js/bars.js"></script>
+    <script src="js/bubbles.js"></script>
+    <script src="js/view.js"></script>
+    <script type="text/javascript">
+
+        var model = new ConceptModel();
+        model.init(data);
+
+        var view = new ConceptViewAggregate($('#bubblechart'), model);
+
+
+    </script>
+  
+</body>
+</html>

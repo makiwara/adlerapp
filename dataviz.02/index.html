@@ -1,0 +1,61 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>Above Books Concept Map 02</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <!-- CSS concatenated and minified via ant build script-->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- end CSS-->
+
+  <script src="js/libs/modernizr-2.0.6.min.js"></script>
+  <style> 
+  svg g circle {
+    cursor: pointer;
+    opacity: 0.8
+  }
+  .bubblechart-label {
+    cursor: pointer; 
+  }
+  svg g circle:hover {
+    opacity: 1
+  }
+  body {
+    background: #666;
+  }
+  </style>
+</head>
+
+<body>
+
+  <div id="bubblechart"></div>
+
+
+  <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script> -->
+  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.2.min.js"><\/script>')</script>
+
+  <script defer src="js/plugins.js"></script>
+  <script src="js/libs/d3.js"></script>
+  <script src="data/lectures.js"></script>
+  <script src="js/vis.js"></script>
+  <script type="text/javascript">
+
+    var bubble = new BubbleChart($('#bubblechart'));
+    bubble.setData(data.concepts);
+    bubble.start();
+
+  </script>
+  
+</body>
+</html>
