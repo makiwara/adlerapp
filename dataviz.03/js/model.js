@@ -91,6 +91,24 @@ ConceptModel.prototype = {
             else         out.unshift(d)
         })
         return out;
+    },
+
+    getChapterPages: function(id) {
+        // TODO go deeper for id
+        var result = this._data.chapters.map(function(chapter){
+            return {
+                title: chapter.title.replace("—", "<br>"),
+                id:    chapter.id,
+                concepts: chapter.concepts.map(function(concept){
+                    return {
+                        id:     concept.original,
+                        title:  concept.original.toUpperCase(),
+                        weight: concept.weight
+                    }
+                })
+            };
+        })
+        return result;
     }
 
 

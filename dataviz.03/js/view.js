@@ -5,22 +5,31 @@ function ConceptViewAggregate($, model) {
     this.barTop    = new ViewBar($, model, this, 'top');
     this.barBottom = new ViewBar($, model, this, 'bottom');
     this.bubbles   = new ViewBubbles($, model, this, 'bubbles');
+    this.pages     = new ViewPages($, model, this, 'pages');
 
     this.state = "overview";
 
-    this.selectTop = function(id) {
+    this.selectTop = function(id, unselect) {
+        if (!unselect && this.topId == id) return this.selectTitle();
+        this.topId = id;
         this.title.fade()
         this.barTop.select(id, 'setBackground')
         this.barBottom.exclude(id);
         this.bubbles.focus(id);
-        if (this.state != "both") this.state = "top";
+        if (unselect || this.state != "both") {
+            this.state = "top";
+            this.bottomId = false;
+        } 
     }
-    this.selectBottom = function(id) {
-        this.state = "both";
+    this.selectBottom = function(id, unselect) {
+        if (!unselect && this.bottomId == id) return this.selectTop(this.topId);
+        this.bottomId = id;
         this.bubbles.fade();
         this.barBottom.select(id);
+        this.state = "both";
     }
     this.selectTitle = function() {
+        this.topId = this.bottomId = false;
         this.title.focus();
         this.barTop.unselect('setBackground');
         this.barBottom.unselect();
@@ -30,10 +39,9 @@ function ConceptViewAggregate($, model) {
     this.event = function(event, data) {
         if (event == "title") this.selectTitle();
         if (event == "bubbles") {
-            if (this.state == "overview")
-                this.selectTop(data);
-            else
-                this.selectBottom(data);
+            if (data === false) return this.selectTop(this.topId, 'unselect');
+            if (this.state == "overview") this.selectTop(data);
+            else                          this.selectBottom(data);
         }
         if (event == "top")    this.selectTop(data);
         if (event == "bottom") this.selectBottom(data);

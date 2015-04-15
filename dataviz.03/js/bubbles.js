@@ -9,14 +9,19 @@ function ViewBubbles($query, model, dispatcher, event) {
         marginTop: 140,
         minFontSize: 7,
         maxFontSize: 30,
-        gravity: .2,
-        friction: .7,
-        damper:   { x: 0.2, y: 0.8 }
+        gravity: .3,
+        friction: .5,
+        damper:   { x: 0.2, y: 0.3 }
     };
 
     this.$ = $query;
-    this.$.append($("<div class='concept-bubbles'>"));
-    this.$wrapper = this.$.find('.concept-bubbles')
+    this.$.append($("<div class='concept-bubbles'></div><div class='concept-bubbles-cancel'>&times;</div>"));
+    this.$wrapper = this.$.find('.concept-bubbles');
+    this.$cancel  = this.$.find('.concept-bubbles-cancel');
+    this.$cancel.click(function(){
+        that.dispatcher.event(event, false)
+    })
+
     this.chart = d3.select('.concept-bubbles');
 
     this.model = model;
@@ -27,15 +32,16 @@ function ViewBubbles($query, model, dispatcher, event) {
         clearTimeout(to);
         to = setTimeout(function(){ that._resize(); }, 500);
     })
-    // todo window.resize
 }
 
 ViewBubbles.prototype = {
 
     fade: function() {
         this.$wrapper.hide();
+        this.$cancel.show();
     },
     focus: function(id) {
+        this.$cancel.hide();
         this.$wrapper.show();
         this.data = this.model.getConceptBubbles(id);
         this.config.multiplier = id?0.5:1;
@@ -85,6 +91,9 @@ ViewBubbles.prototype = {
             .stop()
             .size([this.config.width, this.config.height])
             .start()
+        for (var i=0; i<10; i++) this.force.tick();
+        var that = this;
+        setTimeout(function(){ that.force.stop(); }, 400)        
     },
 
     _prepare: false,
@@ -119,7 +128,7 @@ ViewBubbles.prototype = {
             .friction(this.config.friction)
             .on( "tick", function(e) {
                 that.circles.each(function(d) {
-                        d.x = d.x + (that.config.width/2  - d.x) * that.config.damper.x * e.alpha
+                        // d.x = d.x + (that.config.width/2  - d.x) * that.config.damper.x * e.alpha
                         d.y = d.y + (that.config.marginTop + (that.config.height-that.config.marginTop)/2 - d.y) * that.config.damper.y * e.alpha
                     })
                     .attr("cx", function(d){ return d.x })
@@ -193,7 +202,6 @@ ViewBubbles.prototype = {
         this.circles.exit()
             .remove()
 
-        // -------- start force! ---------------------------------
     }
 
 }

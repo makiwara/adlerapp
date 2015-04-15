@@ -29,15 +29,15 @@
     .concept-title {
         vertical-align: middle;
         width: 100%;
-        margin-top: 32px;
+        margin-top: 24px;
         -webkit-transition: all 0.5s ease;
         cursor: pointer;
     }
-    .concept-title:hover {
-        opacity: 1
-    }
+    .concept-title-active { opacity: 0.5; cursor: pointer }
+    .concept-title-active:hover { opacity: 1 }
     .concept-title h1 {
         margin: 0; padding: 0;
+        margin-bottom: 32px;
         font: 32px/32px Acrom, sans-serif;
         font-weight: 700;
         text-transform: uppercase;
@@ -47,7 +47,7 @@
     }
     .concept-title h2 {
         margin: 0; padding: 0;
-        margin-bottom: 18px;
+        margin-bottom: 16px;
         font: 18px/32px Acrom, sans-serif;
         font-weight: 700;
         text-transform: uppercase;
@@ -150,6 +150,55 @@
         cursor: pointer;
     }
     .concept-bubbles svg circle.concept-bubbles-selected { opacity: 1 }
+    
+    .concept-bubbles-cancel {
+        text-align: center;
+        color: #ffffff;
+        font-family: Acrom, sans-serif;
+        font-weight: 100;
+        font-size: 32px;
+        line-height: 32px;
+        text-transform: uppercase;
+        opacity: 0.5;
+        display:none;
+        cursor: pointer;
+        margin-top: -20px;
+        position: relative;
+        z-index: 400;
+    }
+    .concept-bubbles-cancel:hover { 
+        font-size: 40px;
+        opacity: 1;
+    }
+
+
+    .concept-pages {
+        margin-top: 50px;
+        text-align: center;
+    }
+    .concept-pages-chapter {
+        width: 200px;
+        margin: 0 20px 50px 0; 
+        display: inline-block;
+        vertical-align: top;
+        text-align: left;
+    }
+    .concept-pages-title {
+        font: 14px Helvetica Neue, Helvetica, Arial, sans-serif;
+        line-height: 18px;
+        color: #ffffff;
+        height: 60px;
+        text-overflow: hidden;
+        
+    }
+    .concept-pages-concept {
+        font-family: Acrom, sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        text-transform: uppercase;
+        line-height: 20px;
+        
+    }
     </style>
 </head>
 
@@ -167,6 +216,7 @@
     <script src="js/model.js"></script>
     <script src="js/bars.js"></script>
     <script src="js/bubbles.js"></script>
+    <script src="js/pages.js"></script>
     <script src="js/view.js"></script>
     <script type="text/javascript">
 

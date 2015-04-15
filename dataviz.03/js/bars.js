@@ -102,7 +102,6 @@ ViewBar.prototype = {
     },
 
     unselect: function(setBackground) {
-        // if (setBackground) $('body').css({background: '#444444'})
         this.$bar.css({'margin-bottom': -this.$bar.height()})
         this.$bar.find('.concept-bar')
             .removeClass('concept-bar-visible concept-bar-before concept-bar-after concept-bar-current');
@@ -111,6 +110,7 @@ ViewBar.prototype = {
     select: function(id, setBackground) {
         var that = this;
         var before = true;
+        this.id = id;
         this.$bar.css({'margin-bottom': 0})
         this.$bar.find('.concept-bar')
             .removeClass('concept-bar-visible concept-bar-before concept-bar-after concept-bar-current')
@@ -120,7 +120,6 @@ ViewBar.prototype = {
                     before = false;
                     $(this).addClass('concept-bar-current')
                            .css({ 'margin-left': -0.5*that.barWidth });
-                    // if (setBackground) $('body').css({background: d.color})
                 } else
                 if (before) $(this).addClass('concept-bar-before');
                 else        $(this).addClass('concept-bar-after');
