@@ -134,6 +134,8 @@
     
     .concept-bubbles {
         height: 500px;
+        position: relative;
+        z-index: 100;
         -webkit-transition: all 0.5s ease;
     }
     .concept-bubbles-label {
@@ -144,12 +146,15 @@
         text-align : center;
         color      : #ffffff;
         cursor     : pointer;
+        -webkit-transition: opacity 0.5s ease;
     }
     .concept-bubbles svg circle { 
         opacity: 0.8;
         cursor: pointer;
+        -webkit-transition: opacity: ; 0.5s ease;
     }
-    .concept-bubbles svg circle.concept-bubbles-selected { opacity: 1 }
+    .concept-bubbles svg circle.concept-bubbles-selected { opacity: 1    }
+    .concept-bubbles svg circle.concept-bubbles-hidden   { opacity: 0.25 }
     
     .concept-bubbles-cancel {
         text-align: center;
@@ -191,13 +196,46 @@
         text-overflow: hidden;
         
     }
+    .concept-pages-line {
+        width: 30px;
+    }
+    .concept-pages-lineblock {
+        float: left;
+        margin-bottom: 8px;
+        -webkit-transition: opacity 0.5s ease;
+    }
+    .concept-pages-line:nth-child(1) {
+        height: 8px;
+    }
+    .concept-pages-line:nth-child(2) {
+        height: 4px;
+    }
+    .concept-pages-line:nth-child(3) {
+        height: 2px;
+    }
+    .concept-pages-lines {
+        background: rgba(255,255,255,0.1);
+        width: 120px;
+        height: 180px;
+        padding: 15px 25px;
+        margin-bottom: 20px;
+        clear: both;
+    }
     .concept-pages-concept {
+        clear: both;
+    }
+    .concept-pages-concept {
+        float:left;
         font-family: Acrom, sans-serif;
         font-size: 14px;
         font-weight: 500;
         text-transform: uppercase;
         line-height: 20px;
-        
+        cursor: pointer;
+        -webkit-transition: all 0.5s ease;
+    }
+    .concept-pages-concept:hover {
+        color: #ffffff !important;
     }
     </style>
 </head>

@@ -6,7 +6,7 @@ function ViewBubbles($query, model, dispatcher, event) {
 
     this.config = {
         multiplier: 1,
-        marginTop: 140,
+        marginTop: 100,
         minFontSize: 7,
         maxFontSize: 30,
         gravity: .3,
@@ -159,6 +159,7 @@ ViewBubbles.prototype = {
             })
 
     },
+
     render: function() {
         this.prepare()
         var that = this;
@@ -167,10 +168,10 @@ ViewBubbles.prototype = {
         function mouseX(e, className) {
             that.circles.each(function(d){
                 if (d.id == e.id) this.className.baseVal = className
-            })            
+            })
         }
-        function mouseover(e) { mouseX(e, 'concept-bubbles-selected') }
-        function mouseout(e)  { mouseX(e, '') }
+        function mouseover(e) { mouseX(e, 'concept-bubbles-selected'); that.dispatcher.event('hover', e.id) }
+        function mouseout(e)  { mouseX(e, '');                         that.dispatcher.event('hover') }
         function click(e)     { that.dispatcher.event(that.event, e.id) }
 
         // ------ texts -------------------------------------------

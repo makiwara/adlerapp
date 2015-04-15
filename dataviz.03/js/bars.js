@@ -15,25 +15,25 @@ function ViewBar($query, model, dispatcher, event) {
 ViewBar.prototype = {
 
     render: function() {
-        var $bar = $('<div>').addClass('concept-bars');
-        this.$bar = this.build($bar);
+        this.$bar = $('<div>').addClass('concept-bars');
+        this.build();
         this.$.append($("<div class='concept-bars-wrapper'>").append(this.$bar))
         this.barWidth = 0;
         var that = this;
-        $bar.find('.concept-bar').first().each(function(){
+        this.$bar.find('.concept-bar').first().each(function(){
             that.barWidth = $(this).width();
         })
     },
-    rebuild: function() { this.build(this.$bar.html('')) },
-    build: function($bar) {
+    rebuild: function() { this.$bar.html(''); this.build() },
+    build: function() {
         var that = this;
-        $bar.append($('<div class="concept-bars-left"><div class="concept-bars-left-angle">'))
-        $bar.append($('<div class="concept-bars-right"><div class="concept-bars-right-angle">'))
-        $bar.find('.concept-bars-left-angle').click(function(){ that.dispatchRel(-1) })
-        $bar.find('.concept-bars-right-angle').click(function(){ that.dispatchRel(1) })
+        that.$bar.append($('<div class="concept-bars-left"><div class="concept-bars-left-angle">'))
+        that.$bar.append($('<div class="concept-bars-right"><div class="concept-bars-right-angle">'))
+        that.$bar.find('.concept-bars-left-angle').click(function(){ that.dispatchRel(-1) })
+        that.$bar.find('.concept-bars-right-angle').click(function(){ that.dispatchRel(1) })
         this.data.filter(function(x){ return !x.isExcluded })
                 .map(function(d){
-                    $bar.append($('<div>')
+                    that.$bar.append($('<div>')
                             .html('<div class="concept-bar-text">'+d.title+'</div>')
                             .data('d', d)
                             .addClass('concept-bar')
@@ -42,7 +42,6 @@ ViewBar.prototype = {
                             })
                         )
                 })
-        return $bar;
     },
     dispatchRel: function(dir) {
         var $list = this.$bar.find('.concept-bar-'+(dir>0?"after":"before"));
@@ -106,6 +105,7 @@ ViewBar.prototype = {
         this.$bar.find('.concept-bar')
             .removeClass('concept-bar-visible concept-bar-before concept-bar-after concept-bar-current');
         this.$bar.find('.concept-bars-left-angle, .concept-bars-right-angle').hide();
+        this._selected = false;
     },
     select: function(id, setBackground) {
         var that = this;
@@ -125,9 +125,10 @@ ViewBar.prototype = {
                 else        $(this).addClass('concept-bar-after');
             });
         this.resize()
+        this._selected = id;
     },
     exclude: function(id) {
-        this.data.map(function(d){ d.isExcluded = d.id == id });
+        this.data.map(function(d){ d.isExcluded = d.id == id; })
         this.rebuild()
     }
 }

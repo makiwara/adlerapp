@@ -11,21 +11,21 @@ function ConceptViewAggregate($, model) {
 
     this.selectTop = function(id, unselect) {
         if (!unselect && this.topId == id) return this.selectTitle();
+        this.state = "top";
+        this.bottomId = false;
         this.topId = id;
         this.title.fade()
-        this.barTop.select(id, 'setBackground')
-        this.barBottom.exclude(id);
-        this.bubbles.focus(id);
-        if (unselect || this.state != "both") {
-            this.state = "top";
-            this.bottomId = false;
-        } 
+        this.barTop.select(this.topId, 'setBackground')
+        this.barBottom.exclude(this.topId);
+        this.bubbles.focus(this.topId);
+        this.pages.focus(this.topId, this.bottomId);
     }
     this.selectBottom = function(id, unselect) {
         if (!unselect && this.bottomId == id) return this.selectTop(this.topId);
         this.bottomId = id;
         this.bubbles.fade();
-        this.barBottom.select(id);
+        this.barBottom.select(this.bottomId);
+        this.pages.focus(this.topId, this.bottomId);
         this.state = "both";
     }
     this.selectTitle = function() {
@@ -34,9 +34,18 @@ function ConceptViewAggregate($, model) {
         this.barTop.unselect('setBackground');
         this.barBottom.unselect();
         this.bubbles.focus();
+        this.pages.focus();
         this.state = "overview";
     }
+
     this.event = function(event, data) {
+        if (event == "hover") {
+            this.pages.highlight(data, 'topmost');
+        }
+        if (event == "pages") {
+            if (this.state == "overview") this.selectTop(data);
+            else                          this.selectBottom(data);
+        }
         if (event == "title") this.selectTitle();
         if (event == "bubbles") {
             if (data === false) return this.selectTop(this.topId, 'unselect');

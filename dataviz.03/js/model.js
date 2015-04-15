@@ -94,7 +94,6 @@ ConceptModel.prototype = {
     },
 
     getChapterPages: function(id) {
-        // TODO go deeper for id
         var result = this._data.chapters.map(function(chapter){
             return {
                 title: chapter.title.replace("—", "<br>"),
@@ -103,10 +102,31 @@ ConceptModel.prototype = {
                     return {
                         id:     concept.original,
                         title:  concept.original.toUpperCase(),
-                        weight: concept.weight
+                        weight: concept.weight,
+                        other_concepts: concept.other_concepts.map(function(c2){
+                            return {
+                                id:     c2.original,
+                                title:  c2.original.toUpperCase(),
+                                weight: c2.weight
+                            }
+                        })
                     }
                 })
             };
+        })
+        return result;
+    },
+    getChapterPaint: function(id) {
+        // TODO go deeper for concept id
+        var result = {};
+        this._data.chapters.map(function(chapter){
+            result[chapter.id] = chapter.blocks_paint.map(function(block){
+                var result = block
+                    // .filter(function(x,i){ return i < 10; })
+                    .map(function(x){ return x.original })
+                while (result.length < 10) result.push('');
+                return result;
+            });
         })
         return result;
     }
