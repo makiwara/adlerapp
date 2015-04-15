@@ -24,7 +24,7 @@ function BookManager(options) {
                 {id: 1, title: 'Лекция 1. 02.03.89 — «Узловые проблемы философии»'},
                 {id: 2, title: 'Лекция 2. 16.03.89 — «Логика как форма организации деятельности»'},
                 {id: 3, title: 'Лекция 3. 20.04.89 — «Деятельностный подход и рефлексия»'},
-                {id: 4, title: 'Лекция 4. 04.05.89 – «Мышление»'},
+                {id: 4, title: 'Лекция 4. 04.05.89 — «Мышление»'},
                 {id: 5, title: 'Лекция 5. 11.05.89 — «Принципы деятельностного подхода»'},
                 {id: 6, title: 'Лекция 6. 18.05.89 — «Организационно-деятельностная игра (ОДИ)»'},
             ],
@@ -102,21 +102,16 @@ Book.prototype = {
         this.vocabulary.resetPaint();
         this.meta.chapters.map(function(chapter){
             ['sentences', 'lines', 'blocks'].map(function(prefix){
-                chapter[prefix+"_paint"]    = this.vocabulary.paint(chapter[prefix+"_stems"]);
+                var concepts = {};
+                chapter[prefix+"_paint"]    = this.vocabulary.paint(chapter[prefix+"_stems"], concepts);
                 chapter[prefix+"_weight"]   = chapter[prefix+"_paint"].map(function(paint){
                     var w=0;
                     for (var i in paint) w+=paint[i].weight;
                     return w;
                 })
-                chapter[prefix+"_concepts"] = chapter[prefix+"_paint"].reduce(function(a,b){
-                    var c = [];
-                    for (var i in a) 
-                        c[i] = {
-                            concept: a[i].concept,
-                            weight:  a[i].weight+b[i].weight
-                        };
-                    return c
-                }).sort(weight_sort);
+                chapter[prefix+"_concepts"] = [];
+                for (var i in concepts) chapter[prefix+"_concepts"].push(concepts[i])
+                chapter[prefix+"_concepts"].sort(weight_sort);
             }, this);
         }, this)
     },
@@ -147,11 +142,8 @@ Book.prototype = {
 
 
 
-function weight_sort(a,b) {
-    if (a.weight < b.weight) return +1;
-    if (a.weight > b.weight) return -1;
-    return 0;                    
-}
+function weight_sort(a,b) { return b.weight - a.weight; }
+
 function Vocabulary(options) {
     options = options || {};
     var defaults = {
@@ -217,7 +209,7 @@ function Vocabulary(options) {
         return d;
     }
     this.paint = function(stem_data, concepts_paint) { 
-        var cp = (concepts_paint || this.concepts);
+        var cp = this.concepts;
         return stem_data.map(function(line){
             var result = [];
             for (c in this.concepts) {
@@ -227,8 +219,10 @@ function Vocabulary(options) {
                     }, this)
                     .reduce(function(a,b){ return a+b });
                 result.push({concept: this.concepts[c], weight: weight});
-                cp[c] = cp[c] || {};
-                cp[c].weight = (cp[c].weight || 0) + weight;               
+
+                concepts_paint[c] = concepts_paint[c] || { concept: this.concepts[c] };
+                concepts_paint[c].weight = (concepts_paint[c].weight || 0) + weight;               
+                cp[c].weight += weight;               
             }
             result.sort(weight_sort);
             return result;
@@ -321,6 +315,8 @@ result.chapters.map(function(chapter){
     })
 })
 
+
+
 // console.log(result);
 // result.chapters.map(function(chapter){
 //     console.log()
@@ -328,7 +324,7 @@ result.chapters.map(function(chapter){
 //     console.log(chapter.id, chapter.title);
 //     console.log('-------------')
 //     chapter.concepts.map(function(concept_in_chapter){
-//         console.log(concept_in_chapter);    
+//         console.log(concept_in_chapter.original, concept_in_chapter.weight);    
 //     }) 
 // })
 
@@ -347,6 +343,6 @@ t2
 */
 
 
-// var outputName = bm.getDataFilename(book, 'stats.json');
-// fs.writeFileSync(outputName, JSON.stringify(result), {encoding: 'utf-8'});
+var outputName = bm.getDataFilename(book, 'stats.json');
+fs.writeFileSync(outputName, JSON.stringify(result, null, 4), {encoding: 'utf-8'});
 
