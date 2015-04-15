@@ -156,6 +156,7 @@ function Vocabulary(options) {
     //
     this.stemmer = new snowball(this.config.language);
     this.stem = function(original) {
+        if (original.charAt(0) == "!") return original.substr(1).toLowerCase();
         this.stemmer.setCurrent(original.toLowerCase());
         this.stemmer.stem();
         return this.stemmer.getCurrent();

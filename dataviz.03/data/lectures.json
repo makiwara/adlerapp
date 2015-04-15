@@ -700,10 +700,6 @@
                     {
                         "weight": 1,
                         "original": "Социальная структура"
-                    },
-                    {
-                        "weight": 1,
-                        "original": "Игра"
                     }
                 ],
                 [
@@ -953,10 +949,6 @@
                     },
                     {
                         "weight": 1,
-                        "original": "Игра"
-                    },
-                    {
-                        "weight": 1,
                         "original": "Логика"
                     },
                     {
@@ -1109,10 +1101,6 @@
                     },
                     {
                         "weight": 1,
-                        "original": "Игра"
-                    },
-                    {
-                        "weight": 1,
                         "original": "Принцип"
                     },
                     {
@@ -1148,10 +1136,6 @@
                     {
                         "weight": 1,
                         "original": "Наука"
-                    },
-                    {
-                        "weight": 1,
-                        "original": "Игра"
                     }
                 ],
                 [
@@ -1219,6 +1203,10 @@
                     },
                     {
                         "weight": 2,
+                        "original": "Социальная структура"
+                    },
+                    {
+                        "weight": 2,
                         "original": "Наука"
                     },
                     {
@@ -1226,16 +1214,8 @@
                         "original": "Личность"
                     },
                     {
-                        "weight": 2,
-                        "original": "Социальная структура"
-                    },
-                    {
                         "weight": 1,
                         "original": "Философия"
-                    },
-                    {
-                        "weight": 1,
-                        "original": "Игра"
                     },
                     {
                         "weight": 1,
@@ -1266,10 +1246,6 @@
                     {
                         "weight": 2,
                         "original": "Социальная структура"
-                    },
-                    {
-                        "weight": 1,
-                        "original": "Игра"
                     },
                     {
                         "weight": 1,
@@ -2411,10 +2387,6 @@
                     },
                     {
                         "weight": 1,
-                        "original": "Игра"
-                    },
-                    {
-                        "weight": 1,
                         "original": "Методология"
                     },
                     {
@@ -2480,10 +2452,6 @@
                     {
                         "weight": 2,
                         "original": "Наука"
-                    },
-                    {
-                        "weight": 1,
-                        "original": "Игра"
                     },
                     {
                         "weight": 1,
@@ -2529,15 +2497,11 @@
                     },
                     {
                         "weight": 1,
-                        "original": "Игра"
+                        "original": "Принцип"
                     },
                     {
                         "weight": 1,
                         "original": "Типы мышления"
-                    },
-                    {
-                        "weight": 1,
-                        "original": "Принцип"
                     },
                     {
                         "weight": 1,
@@ -2590,10 +2554,6 @@
                     {
                         "weight": 1,
                         "original": "Личность"
-                    },
-                    {
-                        "weight": 1,
-                        "original": "Игра"
                     },
                     {
                         "weight": 1,
@@ -2639,19 +2599,15 @@
                     },
                     {
                         "weight": 1,
-                        "original": "Игра"
-                    },
-                    {
-                        "weight": 1,
                         "original": "Методология"
                     },
                     {
                         "weight": 1,
-                        "original": "Наука"
+                        "original": "Логика"
                     },
                     {
                         "weight": 1,
-                        "original": "Логика"
+                        "original": "Наука"
                     }
                 ],
                 [
@@ -3517,10 +3473,6 @@
                     },
                     {
                         "weight": 2,
-                        "original": "Игра"
-                    },
-                    {
-                        "weight": 2,
                         "original": "Наука"
                     },
                     {
@@ -3529,11 +3481,15 @@
                     },
                     {
                         "weight": 1,
-                        "original": "Принцип"
+                        "original": "Логика"
                     },
                     {
                         "weight": 1,
-                        "original": "Логика"
+                        "original": "Игра"
+                    },
+                    {
+                        "weight": 1,
+                        "original": "Принцип"
                     },
                     {
                         "weight": 1,
@@ -3749,10 +3705,6 @@
                     },
                     {
                         "weight": 1,
-                        "original": "Игра"
-                    },
-                    {
-                        "weight": 1,
                         "original": "Социальная структура"
                     }
                 ],
@@ -3825,10 +3777,6 @@
                     },
                     {
                         "weight": 1,
-                        "original": "Игра"
-                    },
-                    {
-                        "weight": 1,
                         "original": "Наука"
                     },
                     {
@@ -3875,10 +3823,6 @@
                     },
                     {
                         "weight": 1,
-                        "original": "Игра"
-                    },
-                    {
-                        "weight": 1,
                         "original": "Философия"
                     }
                 ],
@@ -3906,10 +3850,6 @@
                     {
                         "weight": 1,
                         "original": "Социальная структура"
-                    },
-                    {
-                        "weight": 1,
-                        "original": "Игра"
                     }
                 ],
                 [
@@ -3957,10 +3897,6 @@
                     },
                     {
                         "weight": 1,
-                        "original": "Игра"
-                    },
-                    {
-                        "weight": 1,
                         "original": "Человек"
                     }
                 ],
@@ -3984,10 +3920,6 @@
                     {
                         "weight": 2,
                         "original": "Наука"
-                    },
-                    {
-                        "weight": 1,
-                        "original": "Игра"
                     },
                     {
                         "weight": 1,
@@ -4034,10 +3966,6 @@
                     {
                         "weight": 2,
                         "original": "Естественное/искусственное"
-                    },
-                    {
-                        "weight": 1,
-                        "original": "Игра"
                     },
                     {
                         "weight": 1,
@@ -4075,10 +4003,6 @@
                     },
                     {
                         "weight": 2,
-                        "original": "Игра"
-                    },
-                    {
-                        "weight": 2,
                         "original": "Человек"
                     },
                     {
@@ -4096,6 +4020,10 @@
                     {
                         "weight": 1,
                         "original": "Личность"
+                    },
+                    {
+                        "weight": 1,
+                        "original": "Игра"
                     },
                     {
                         "weight": 1,
@@ -4163,10 +4091,6 @@
                     },
                     {
                         "weight": 1,
-                        "original": "Игра"
-                    },
-                    {
-                        "weight": 1,
                         "original": "Принцип"
                     }
                 ],
@@ -4196,7 +4120,7 @@
                         "original": "Социальная структура"
                     },
                     {
-                        "weight": 2,
+                        "weight": 1,
                         "original": "Игра"
                     },
                     {
@@ -5053,15 +4977,11 @@
                     },
                     {
                         "weight": 1,
-                        "original": "Игра"
+                        "original": "Принцип"
                     },
                     {
                         "weight": 1,
                         "original": "Типы мышления"
-                    },
-                    {
-                        "weight": 1,
-                        "original": "Принцип"
                     },
                     {
                         "weight": 1,
@@ -5168,10 +5088,6 @@
                     {
                         "weight": 2,
                         "original": "Логика"
-                    },
-                    {
-                        "weight": 1,
-                        "original": "Игра"
                     },
                     {
                         "weight": 1,
@@ -5322,8 +5238,8 @@
                         "original": "Принцип"
                     },
                     {
-                        "weight": 2,
-                        "original": "Игра"
+                        "weight": 1,
+                        "original": "Философия"
                     },
                     {
                         "weight": 1,
@@ -5339,7 +5255,7 @@
                     },
                     {
                         "weight": 1,
-                        "original": "Философия"
+                        "original": "Игра"
                     }
                 ],
                 [
@@ -5457,10 +5373,6 @@
                     },
                     {
                         "weight": 3,
-                        "original": "Игра"
-                    },
-                    {
-                        "weight": 3,
                         "original": "Принцип"
                     },
                     {
@@ -5474,6 +5386,10 @@
                     {
                         "weight": 2,
                         "original": "Философия"
+                    },
+                    {
+                        "weight": 2,
+                        "original": "Игра"
                     },
                     {
                         "weight": 2,
@@ -6357,15 +6273,15 @@
                     },
                     {
                         "weight": 2,
-                        "original": "Игра"
-                    },
-                    {
-                        "weight": 2,
                         "original": "Деятельность"
                     },
                     {
                         "weight": 1,
                         "original": "Логика"
+                    },
+                    {
+                        "weight": 1,
+                        "original": "Игра"
                     },
                     {
                         "weight": 1,
@@ -6434,10 +6350,6 @@
                     {
                         "weight": 1,
                         "original": "Человек"
-                    },
-                    {
-                        "weight": 1,
-                        "original": "Игра"
                     },
                     {
                         "weight": 1,
@@ -6510,10 +6422,6 @@
                     {
                         "weight": 1,
                         "original": "Философия"
-                    },
-                    {
-                        "weight": 1,
-                        "original": "Игра"
                     }
                 ],
                 [
@@ -6543,11 +6451,11 @@
                     },
                     {
                         "weight": 1,
-                        "original": "Игра"
+                        "original": "Философия"
                     },
                     {
                         "weight": 1,
-                        "original": "Философия"
+                        "original": "Социальная структура"
                     },
                     {
                         "weight": 1,
@@ -6560,10 +6468,6 @@
                     {
                         "weight": 1,
                         "original": "Личность"
-                    },
-                    {
-                        "weight": 1,
-                        "original": "Социальная структура"
                     }
                 ],
                 [
@@ -6593,10 +6497,6 @@
                     },
                     {
                         "weight": 1,
-                        "original": "Игра"
-                    },
-                    {
-                        "weight": 1,
                         "original": "Философия"
                     },
                     {
@@ -6605,11 +6505,11 @@
                     },
                     {
                         "weight": 1,
-                        "original": "Человек"
+                        "original": "Личность"
                     },
                     {
                         "weight": 1,
-                        "original": "Личность"
+                        "original": "Человек"
                     }
                 ],
                 [
@@ -6742,10 +6642,6 @@
                     {
                         "weight": 1,
                         "original": "Мышление"
-                    },
-                    {
-                        "weight": 1,
-                        "original": "Игра"
                     }
                 ],
                 [
@@ -6775,11 +6671,11 @@
                     },
                     {
                         "weight": 1,
-                        "original": "Игра"
+                        "original": "Философия"
                     },
                     {
                         "weight": 1,
-                        "original": "Философия"
+                        "original": "Методология"
                     },
                     {
                         "weight": 1,
@@ -6788,10 +6684,6 @@
                     {
                         "weight": 1,
                         "original": "Человек"
-                    },
-                    {
-                        "weight": 1,
-                        "original": "Методология"
                     }
                 ],
                 [
@@ -6821,10 +6713,6 @@
                     },
                     {
                         "weight": 1,
-                        "original": "Игра"
-                    },
-                    {
-                        "weight": 1,
                         "original": "Социальная структура"
                     }
                 ],
@@ -6844,10 +6732,6 @@
                     {
                         "weight": 1,
                         "original": "Человек"
-                    },
-                    {
-                        "weight": 1,
-                        "original": "Игра"
                     }
                 ],
                 [
@@ -6862,10 +6746,6 @@
                     {
                         "weight": 1,
                         "original": "Философия"
-                    },
-                    {
-                        "weight": 1,
-                        "original": "Игра"
                     }
                 ],
                 [
@@ -6880,10 +6760,6 @@
                     {
                         "weight": 1,
                         "original": "Личность"
-                    },
-                    {
-                        "weight": 1,
-                        "original": "Игра"
                     },
                     {
                         "weight": 1,
@@ -6960,10 +6836,6 @@
                     {
                         "weight": 1,
                         "original": "Личность"
-                    },
-                    {
-                        "weight": 1,
-                        "original": "Игра"
                     }
                 ],
                 [
@@ -7024,10 +6896,6 @@
                     {
                         "weight": 1,
                         "original": "Человек"
-                    },
-                    {
-                        "weight": 1,
-                        "original": "Игра"
                     }
                 ],
                 [
@@ -7054,10 +6922,6 @@
                     {
                         "weight": 1,
                         "original": "Личность"
-                    },
-                    {
-                        "weight": 1,
-                        "original": "Игра"
                     }
                 ],
                 [
@@ -7212,7 +7076,7 @@
                         "original": "Методология"
                     },
                     {
-                        "weight": 3,
+                        "weight": 2,
                         "original": "Игра"
                     },
                     {
@@ -7284,8 +7148,8 @@
                         "original": "Мышление"
                     },
                     {
-                        "weight": 3,
-                        "original": "Игра"
+                        "weight": 2,
+                        "original": "Деятельность"
                     },
                     {
                         "weight": 2,
@@ -7301,11 +7165,11 @@
                     },
                     {
                         "weight": 2,
-                        "original": "Философия"
+                        "original": "Игра"
                     },
                     {
                         "weight": 2,
-                        "original": "Деятельность"
+                        "original": "Философия"
                     },
                     {
                         "weight": 1,
@@ -8146,12 +8010,12 @@
                         "original": "Методология"
                     },
                     {
-                        "weight": 2,
-                        "original": "Игра"
+                        "weight": 1,
+                        "original": "Личность"
                     },
                     {
                         "weight": 1,
-                        "original": "Личность"
+                        "original": "Игра"
                     },
                     {
                         "weight": 1,
@@ -8176,12 +8040,12 @@
                         "original": "Мышление"
                     },
                     {
-                        "weight": 3,
-                        "original": "Игра"
+                        "weight": 2,
+                        "original": "Деятельность"
                     },
                     {
                         "weight": 2,
-                        "original": "Деятельность"
+                        "original": "Игра"
                     },
                     {
                         "weight": 1,
@@ -8444,7 +8308,7 @@
                         "original": "Человек"
                     },
                     {
-                        "weight": 3,
+                        "weight": 2,
                         "original": "Игра"
                     },
                     {
@@ -8482,8 +8346,8 @@
                         "original": "Человек"
                     },
                     {
-                        "weight": 2,
-                        "original": "Игра"
+                        "weight": 1,
+                        "original": "Философия"
                     },
                     {
                         "weight": 1,
@@ -8491,7 +8355,7 @@
                     },
                     {
                         "weight": 1,
-                        "original": "Философия"
+                        "original": "Игра"
                     }
                 ],
                 [
@@ -8546,8 +8410,8 @@
                         "original": "Принцип"
                     },
                     {
-                        "weight": 2,
-                        "original": "Игра"
+                        "weight": 1,
+                        "original": "Мышление"
                     },
                     {
                         "weight": 1,
@@ -8563,7 +8427,7 @@
                     },
                     {
                         "weight": 1,
-                        "original": "Мышление"
+                        "original": "Игра"
                     }
                 ],
                 [
@@ -8703,11 +8567,11 @@
                     },
                     {
                         "weight": 3,
-                        "original": "Игра"
+                        "original": "Принцип"
                     },
                     {
-                        "weight": 3,
-                        "original": "Принцип"
+                        "weight": 2,
+                        "original": "Игра"
                     },
                     {
                         "weight": 2,
@@ -9347,7 +9211,7 @@
             ]
         },
         {
-            "weight": 491,
+            "weight": 443,
             "original": "Игра",
             "other_concepts": [
                 {
