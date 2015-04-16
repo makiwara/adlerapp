@@ -55,9 +55,9 @@ ViewPages.prototype = {
             this.data.map(function(chapter) {
                 if (!that._topId) {
                     that.paint[chapter.id].map(function(concepts, i1){
-                        var opacity = 0.05;
+                        var opacity = 0.0;
                         concepts.map(function(conceptId, i2){ 
-                            if (conceptId == id) opacity = (i2 < 3)?1:0.75;
+                            if (conceptId == id) opacity = (i2 < 3)?1:0.15;
                         })
                         chapter.$.find('.concept-pages-lineblock-'+i1).css({ opacity: opacity })
                     })
@@ -67,7 +67,9 @@ ViewPages.prototype = {
                 })
             })
         } else {
-            this.$.find(".concept-pages-lineblock").css({ opacity: 1 });
+            if (!that._topId) {
+                this.$.find(".concept-pages-lineblock").css({ opacity: 1 });
+            }
             this.$.find('.concept-pages-concept').css({ opacity: 1 });
         }
     },
@@ -117,9 +119,9 @@ ViewPages.prototype = {
                     if (found[0] && found[1]) opacity = 1;
                 } else
                 if (topId) {
-                    var opacity = 0.05;
+                    var opacity = 0;
                     concepts.map(function(conceptId, i2){ 
-                        if (conceptId == topId) opacity = (i2 < 3)?1:0.75;
+                        if (conceptId == topId) opacity = (i2 < 3)?1:0.1;
                     })
                 }
                 if (opacity < 1) 
