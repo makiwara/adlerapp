@@ -1,5 +1,0 @@
-/*! URI.js v1.12.1 http://medialize.github.io/URI.js/ */
-/* build contains: IPv6.js */
-(function(d,f){"object"===typeof exports?module.exports=f():"function"===typeof define&&define.amd?define(f):d.IPv6=f(d)})(this,function(d){var f=d&&d.IPv6;return{best:function(a){a=a.toLowerCase().split(":");var c=a.length,e=8;""===a[0]&&""===a[1]&&""===a[2]?(a.shift(),a.shift()):""===a[0]&&""===a[1]?a.shift():""===a[c-1]&&""===a[c-2]&&a.pop();c=a.length;-1!==a[c-1].indexOf(".")&&(e=7);var b;for(b=0;b<c&&""!==a[b];b++);if(b<e)for(a.splice(b,1,"0000");a.length<e;)a.splice(b,0,"0000");for(b=0;b<e;b++){for(var c=
-a[b].split(""),g=0;3>g;g++)if("0"===c[0]&&1<c.length)c.splice(0,1);else break;a[b]=c.join("")}var c=-1,d=g=0,f=-1,h=!1;for(b=0;b<e;b++)h?"0"===a[b]?d+=1:(h=!1,d>g&&(c=f,g=d)):"0"==a[b]&&(h=!0,f=b,d=1);d>g&&(c=f,g=d);1<g&&a.splice(c,g,"");c=a.length;e="";""===a[0]&&(beststr=":");for(b=0;b<c;b++){e+=a[b];if(b===c-1)break;e+=":"}""===a[c-1]&&(e+=":");return e},noConflict:function(){d.IPv6===this&&(d.IPv6=f);return this}}});
-
