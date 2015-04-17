@@ -6,9 +6,17 @@ function ConceptViewAggregate($, model) {
     this.barBottom = new ViewBar($, model, this, 'bottom');
     this.bubbles   = new ViewBubbles($, model, this, 'bubbles');
     this.pages     = new ViewPages($, model, this, 'pages');
+    this.texts     = new ViewTexts($, model, this, 'texts');
 
     this.state = "overview";
 
+    this.selectBoth = function(id1, id2) {
+        this.topId = id1;
+        this.title.fade()
+        this.barTop.select(this.topId, 'setBackground')
+        this.barBottom.exclude(this.topId);
+        this.selectBottom(id2)
+    }
     this.selectTop = function(id, unselect) {
         if (!unselect && this.topId == id) return this.selectTitle();
         this.state = "top";
@@ -19,6 +27,7 @@ function ConceptViewAggregate($, model) {
         this.barBottom.exclude(this.topId);
         this.bubbles.focus(this.topId);
         this.pages.focus(this.topId, this.bottomId);
+        this.texts.focus(this.topId, this.bottomId);
     }
     this.selectBottom = function(id, unselect) {
         if (!unselect && this.bottomId == id) return this.selectTop(this.topId);
@@ -26,6 +35,7 @@ function ConceptViewAggregate($, model) {
         this.bubbles.fade();
         this.barBottom.select(this.bottomId);
         this.pages.focus(this.topId, this.bottomId);
+        this.texts.focus(this.topId, this.bottomId);
         this.state = "both";
     }
     this.selectTitle = function() {
@@ -35,6 +45,7 @@ function ConceptViewAggregate($, model) {
         this.barBottom.unselect();
         this.bubbles.focus();
         this.pages.focus();
+        this.texts.focus();
         this.state = "overview";
     }
 

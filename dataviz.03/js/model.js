@@ -117,10 +117,12 @@ ConceptModel.prototype = {
         return result;
     },
     getChapterPaint: function(id) {
-        // TODO go deeper for concept id
         var result = {};
+        var paint_mode = "blocks_paint";
+        var maxSize = 0;
         this._data.chapters.map(function(chapter){
-            result[chapter.id] = chapter.blocks_paint.map(function(block){
+            if (chapter.lines_paint) paint_mode = "lines_paint";
+            result[chapter.id] = chapter[paint_mode].map(function(block){
                 var result = block
                     // .filter(function(x,i){ return i < 10; })
                     .map(function(x){ return x.original })
@@ -129,6 +131,21 @@ ConceptModel.prototype = {
             });
         })
         return result;
+    },
+
+    getTexts: function(id1, id2) {
+        var texts = [];
+        this._data.concepts.map(function(c1){
+            if (c1.original == id1) {
+                if (id2) {
+                    c1.other_concepts.map(function(c2){
+                        if (c2.original == id2) texts = c2.texts;
+                    })
+                }
+                else texts = c1.texts;
+            }
+        })
+        return texts;
     }
 
 

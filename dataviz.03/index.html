@@ -193,15 +193,15 @@
         line-height: 18px;
         color: #ffffff;
         height: 60px;
-        text-overflow: hidden;
-        
+        text-overflow: hidden;       
+        width: 200px;
     }
     .concept-pages-line {
-        width: 30px;
+        width: 20px;
     }
     .concept-pages-lineblock {
         float: left;
-        margin-bottom: 8px;
+        margin-bottom: 4px;
         -webkit-transition: opacity 0.5s ease;
     }
     .concept-pages-line:nth-child(1) {
@@ -237,6 +237,57 @@
     .concept-pages-concept:hover {
         color: #ffffff !important;
     }
+
+    footer {
+        padding: 50px;
+        text-align: center;
+        font: 14px Helvetica Neue, Helvetica, Arial, sans-serif;
+        line-height: 18px;
+        color: #999999;
+    }
+    footer hr {
+        height: 1px;
+        border: 0;
+        background: #999999;
+    }
+    a:link, a:visited {
+        color: #cccccc;
+        text-decoration: none
+    }
+    a:hover, a:active {
+        color: #ffffff;
+        text-decoration: underline
+    }
+
+    .concept-texts {
+        vertical-align: middle;
+        width: 100%;
+        margin-top: 24px;
+        -webkit-transition: all 0.5s ease;
+    }
+    .concept-texts h2 {
+        margin: 0; padding: 0;
+        margin-bottom: 32px;
+        font: 32px/32px Acrom, sans-serif;
+        font-weight: 700;
+        text-transform: uppercase;
+        width: 100%; 
+        text-align: center;
+        color: #ffffff;
+    }
+    .concept-texts h2 span { opacity: 0.5 }
+    .concept-text {
+        margin: 12px auto;
+        width: 60%;
+        min-width: 400px;
+        max-width: 800px;
+        color: #e5e5e5;
+        font: 15px Helvetica Neue, Helvetica, Arial, sans-serif;
+        font-weight: 100;
+        line-height: 25px;
+        letter-spacing: 1px;
+    }
+
     </style>
 </head>
 
@@ -244,6 +295,14 @@
 
     <div id="bubblechart">       
     </div>
+
+    <footer>
+        <hr>
+        Above Books &copy; 2015.
+        Book content copyright by its authors.
+        <br >
+        For any inquiry please contact <a href="mailto:nick@projectabove.com">Nicholas</a>.
+    </footer>
 
     <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script> -->
     <script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.2.min.js"><\/script>')</script>
@@ -255,13 +314,27 @@
     <script src="js/bars.js"></script>
     <script src="js/bubbles.js"></script>
     <script src="js/pages.js"></script>
+    <script src="js/texts.js"></script>
     <script src="js/view.js"></script>
     <script type="text/javascript">
 
+
         var model = new ConceptModel();
         model.init(data);
-
         var view = new ConceptViewAggregate($('#bubblechart'), model);
+
+        var tags = location.hash.replace(/^#/, '')
+        if (tags.length > 0) {
+            tags = tags.split("+");
+            var id1 = tags[0];
+            var id2 = tags[1];
+            var concepts = {};
+            model.getConceptBars().map(function(c){ concepts[c.id] = c; })
+            if (concepts[id1]) {
+                if (concepts[id2]) view.selectBoth(id1, id2)
+                else               view.selectTop(id1)
+            }
+        }
 
 
     </script>

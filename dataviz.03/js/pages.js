@@ -34,7 +34,7 @@ ViewPages.prototype = {
             var $lines = chapter.$.find('.concept-pages-lines');
             that.paint[chapter.id].map(function(concepts, i1){
                 var $line = $('<div class="concept-pages-lineblock concept-pages-lineblock-'+i1+'">');
-                concepts.filter(function(d,i){ return i < 3 }).map(function(conceptId, i2){
+                concepts.filter(function(d,i){ return i < 1 }).map(function(conceptId, i2){
                     $line.append($('<div class="concept-pages-line concept-pages-line-'+i1+'-'+i2+'">')
                         .css({ background: that.colors[conceptId] })
                     )
@@ -53,13 +53,17 @@ ViewPages.prototype = {
         if (that._bottomId) return;
         if (id) {
             this.data.map(function(chapter) {
-                if (!that._topId) {
+                if (true || !that._topId) {
                     that.paint[chapter.id].map(function(concepts, i1){
                         var opacity = 0.0;
                         concepts.map(function(conceptId, i2){ 
                             if (conceptId == id) opacity = (i2 < 3)?1:0.15;
                         })
-                        chapter.$.find('.concept-pages-lineblock-'+i1).css({ opacity: opacity })
+                        var prevOpacity = chapter.$.find('.concept-pages-lineblock-'+i1).css("opacity");
+                        if (chapter.$.find('.concept-pages-lineblock-'+i1).data("opacity") == undefined)
+                            chapter.$.find('.concept-pages-lineblock-'+i1).data("opacity", prevOpacity);
+                        chapter.$.find('.concept-pages-lineblock-'+i1)
+                            .css({ opacity: opacity })
                     })
                 }
                 if (topmost) chapter.$.find('.concept-pages-concept').each(function(){
@@ -67,8 +71,17 @@ ViewPages.prototype = {
                 })
             })
         } else {
-            if (!that._topId) {
-                this.$.find(".concept-pages-lineblock").css({ opacity: 1 });
+            if (true || !that._topId) {
+                this.data.map(function(chapter) {
+                    that.paint[chapter.id].map(function(concepts, i1){
+                        if (chapter.$.find('.concept-pages-lineblock-'+i1).data("opacity") != undefined) {
+                            var backOpacity = chapter.$.find('.concept-pages-lineblock-'+i1).data("opacity");
+                            chapter.$.find('.concept-pages-lineblock-'+i1).css({opacity : backOpacity})
+                            chapter.$.find('.concept-pages-lineblock-'+i1).data("opacity", undefined) 
+                        }
+                    })
+                })
+                // this.$.find(".concept-pages-lineblock").css({ opacity: 1 });
             }
             this.$.find('.concept-pages-concept').css({ opacity: 1 });
         }
@@ -113,8 +126,10 @@ ViewPages.prototype = {
                     var found;
                     found = [false, false];
                     concepts.map(function(conceptId, i2){ 
-                        if (conceptId == topId)    found[0] = true;
-                        if (conceptId == bottomId) found[1] = true;
+                        if (i2 < 3) {
+                            if (conceptId == topId)    found[0] = true;
+                            if (conceptId == bottomId) found[1] = true;
+                        }
                     })
                     if (found[0] && found[1]) opacity = 1;
                 } else

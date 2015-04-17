@@ -14,7 +14,7 @@ function BookManager(options) {
     options = options || {};
     var defaults = {
         dataPath: 'data/',
-        maxBlocksPerChapter: 29,
+        maxBlocksPerChapter: 86,
     };
     this.config = merge(defaults, options);
     this.bookMeta = {
@@ -117,16 +117,23 @@ Book.prototype = {
     },
     //
     getTextsForConcept: function(original, level) {
-        level = level || 'lines';
+        return this.getTextsForConcepts([original], level)
+    },
+    //
+    getTextsForConcepts: function(originals, level) {
+        var concepts = originals.map(function(o){ return this.vocabulary.concepts[o] }, this)
         var result = [];
-        var concept = this.vocabulary.concepts[original];
         this.meta.chapters.map(function(chapter){
             var chapter_result = [];
             for (var i=0; i<chapter[level].length; i++) {
-                var weight = this.vocabulary.calculateWeight(concept.stems, chapter[level][i]);
+                var weight = 1;
+                concepts.map(function(concept){
+                    weight = weight * this.vocabulary.calculateWeight(concept.stems, chapter[level][i]);
+                }, this)
                 if (weight > 0)
                     chapter_result.push({
                         text: chapter[level][i],
+                        chapterId: chapter.id,
                         weight: weight * chapter[level+"_weight"][i]
                     })
             }
@@ -136,7 +143,16 @@ Book.prototype = {
                 texts: chapter_result
             });
         }, this)
+        //console.log(result)
         return result;
+    },
+    getTextsForConceptsFlat: function(originals, level) {
+        var texts = [];
+        this.getTextsForConcepts(originals, level).map(function(chapter){
+            texts = texts.concat(chapter.texts);
+        })
+        texts.sort(weight_sort)
+        return texts;
     }
 }
 
@@ -305,6 +321,13 @@ result.concepts.map(function(concept){
     for (var i in cci) list.push({ original: i, weight: cci[i] });
     list.sort(weight_sort);
     concept.other_concepts = list.filter(function(x){ return x.weight > 0 && x.original != concept.original });
+    // texts
+    concept.texts = book.getTextsForConceptsFlat([concept.original], 'lines')
+                        .filter(function(t, i){ return (i < 4 || t.weight > 7) && i < 10});
+    concept.other_concepts.map(function(c){
+        c.texts = book.getTextsForConceptsFlat([concept.original, c.original], 'lines')
+                        .filter(function(t, i){ return (i < 4 || t.weight > 7) && i < 10});
+    }) 
 })
 result.chapters.map(function(chapter){
     chapter.concepts.map(function(concept_in_chapter){
@@ -329,19 +352,19 @@ result.chapters.map(function(chapter){
 //     }) 
 // })
 
-/*
-var texts = book.getTextsForConcept("Методология", 'sentences');
-var t2 = [];
-texts.map(function(text){
-    t2 = t2.concat(text.texts);
-})
-t2.sort(weight_sort)
-t2
-.filter(function(t){ return t.weight > 7 })
-.map(function(t){
-    console.log(t.text)
-})
-*/
+
+// var texts = book.getTextsForConcept("Методология", 'sentences');
+// var t2 = [];
+// texts.map(function(text){
+//     t2 = t2.concat(text.texts);
+// })
+// t2.sort(weight_sort)
+// t2
+// .filter(function(t, i){ return t.weight > 7 && i < 10})
+// .map(function(t){
+//     console.log(t.text)
+// })
+
 
 
 var outputName = bm.getDataFilename(book, 'stats.json');
