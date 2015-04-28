@@ -14,6 +14,7 @@ function BookManager(options) {
     options = options || {};
     var defaults = {
         dataPath: 'data/',
+        outputPath: '../dataviz.clientside/data/',
         maxBlocksPerChapter: 86,
     };
     this.config = merge(defaults, options);
@@ -26,19 +27,32 @@ function BookManager(options) {
                 {id: 3, title: 'Лекция 3. 20.04.89 — «Деятельностный подход и рефлексия»'},
                 {id: 4, title: 'Лекция 4. 04.05.89 — «Мышление»'},
                 {id: 5, title: 'Лекция 5. 11.05.89 — «Принципы деятельностного подхода»'},
-                {id: 6, title: 'Лекция 6. 18.05.89 — «Организационно-деятельностная игра (ОДИ)»'},
-            ],
+                {id: 6, title: 'Лекция 6. 18.05.89 — «Организационно-деятельностная игра (ОДИ)»'}
+            ]
         }
     }
 
 }
 BookManager.prototype = {
     getBook: function(bookId) {
-        return new Book(this, bookId, this.bookMeta[bookId]);
+        var metaJson = fs.readFileSync( this.getDataFilename({id:bookId}, 'meta.json'), {encoding: 'utf-8'} );
+        var meta = JSON.parse(metaJson);
+        return new Book(this, bookId, meta);
     },
     getDataFilename: function(book, path) {
         return this.config.dataPath+book.id+'/'+path;
     },
+    getOutputFilename: function(book) {
+        return this.config.outputPath+book.id+'.js';
+    },
+    renderLibrary: function() {
+        fs.readdirSync(this.config.dataPath)
+            .filter(function(filename){ return filename.charAt(0) != '.'})
+            .map(function(filename){
+                var book = this.getBook(filename);
+                book.renderStats();
+            }, this)
+    }
 }
 
 function Book(bm, bookId, bookMeta) {
@@ -50,6 +64,99 @@ function Book(bm, bookId, bookMeta) {
 }
 
 Book.prototype = {
+
+    copyMetaWithNoChapters: function() {
+        var newMeta = {}
+        for (var i in this.meta) 
+            if (i != "chapters") 
+            newMeta[i] = this.meta[i];
+        return newMeta;
+    },
+    renderStats: function() {
+        var book = this;
+        book.prepareTexts();
+        book.repaint();
+        var result = {
+            meta: this.copyMetaWithNoChapters(this.meta),
+            chapters: [],
+            concepts: []
+        };
+        book.meta.chapters.map(function(chapter) {
+            result.chapters.push({
+                id: chapter.id,
+                title: chapter.title,
+                concepts: chapter.lines_concepts
+                            .map(function(one){ return { weight: one.weight, original: one.concept.original } })
+                            .filter(function(one){ return one.weight > 0 }),
+                blocks_paint: chapter.blocks_paint
+                            .map(function(two){ return two
+                                .map(function(one) { return { weight: one.weight, original: one.concept.original } }) 
+                                .filter(function(one){ return one.weight > 0 })
+                            })
+            })
+        })
+        for (var i in book.vocabulary.concepts) {
+            var concept = book.vocabulary.concepts[i];
+            result.concepts.push({
+                weight: concept.weight,
+                original: concept.original
+                })
+        }
+        result.concepts.sort(weight_sort);
+        // пересечение посчитаем?
+        var cc = {};
+        var cc_chapters = {};
+        var level = "lines";
+        book.meta.chapters.map(function(chapter) {
+            var cc_one = {};
+            chapter[level+"_paint"].map(function(paint){
+                var hash_paint = {};
+                paint.map(function(x){ hash_paint[x.concept.original] = x.weight });
+                for (var i in book.vocabulary.concepts) for (var j in book.vocabulary.concepts) {
+                    var weight = 0;
+                    if (hash_paint[i] && hash_paint[j])
+                        weight = hash_paint[i] * hash_paint[j];
+                    cc_one[i] = cc_one[i] || {};
+                    cc[i]     = cc[i] || {};
+                    cc_one[i][j]  = cc_one[i][j] || 0;
+                    cc[i][j]  = cc[i][j] || 0;
+                    cc[i][j] += weight;
+                    cc_one[i][j] += weight;
+                }
+            })
+            cc_chapters[chapter.id] = cc_one;
+        })
+        result.concepts.map(function(concept){
+            var list = [];
+            var cci = cc[concept.original];
+            for (var i in cci) list.push({ original: i, weight: cci[i] });
+            list.sort(weight_sort);
+            concept.other_concepts = list.filter(function(x){ return x.weight > 0 && x.original != concept.original });
+            // texts
+            concept.texts = book.getTextsForConceptsFlat([concept.original], 'lines')
+                                .filter(function(t, i){ return (i < 4 || t.weight > 7) && i < 10});
+            concept.other_concepts.map(function(c){
+                c.texts = book.getTextsForConceptsFlat([concept.original, c.original], 'lines')
+                                .filter(function(t, i){ return (i < 4 || t.weight > 7) && i < 10});
+            }) 
+        })
+        result.chapters.map(function(chapter){
+            chapter.concepts.map(function(concept_in_chapter){
+                var cci = cc_chapters[ chapter.id ][concept_in_chapter.original];
+                var list = [];
+                for (var i in cci) list.push({ original: i, weight: cci[i] });
+                list.sort(weight_sort);
+                concept_in_chapter.other_concepts = list.filter(function(x){ return x.weight > 0 && x.original != concept.original });
+            })
+        })
+
+        // write result
+        var outputName = this.manager.getOutputFilename(this);
+        var data = 'window.data = '+JSON.stringify(result, null, 4);
+        fs.writeFileSync(outputName, data, {encoding: 'utf-8'});
+
+    },
+
     getTextFilename: function(chapterId) {
         return this.manager.getDataFilename(this, chapterId+'.txt');
     },
@@ -156,8 +263,6 @@ Book.prototype = {
     }
 }
 
-
-
 function weight_sort(a,b) { return b.weight - a.weight; }
 
 function Vocabulary(options) {
@@ -205,11 +310,6 @@ function Vocabulary(options) {
                 })
             }
         }
-        /*
-        for (var i in this.concepts) {
-            console.log(i, '\n  ', this.concepts[i].terms.map(function(x){ return x.original; }).join(','))
-        }
-        */
     }
     // 
     this.resetPaint = function(concepts) {
@@ -258,86 +358,9 @@ function Vocabulary(options) {
 }
 // ==== debug purposes ====
 
+
 var bm = new BookManager();
-var book = bm.getBook('lectures');
-book.prepareTexts();
-book.repaint();
-
-
-var result = {
-    chapters: [],
-    concepts: []
-};
-
-
-book.meta.chapters.map(function(chapter) {
-    result.chapters.push({
-        id: chapter.id,
-        title: chapter.title,
-        concepts: chapter.lines_concepts
-                    .map(function(one){ return { weight: one.weight, original: one.concept.original } })
-                    .filter(function(one){ return one.weight > 0 }),
-        blocks_paint: chapter.blocks_paint
-                    .map(function(two){ return two
-                        .map(function(one) { return { weight: one.weight, original: one.concept.original } }) 
-                        .filter(function(one){ return one.weight > 0 })
-                    })
-    })
-})
-for (var i in book.vocabulary.concepts) {
-    var concept = book.vocabulary.concepts[i];
-    result.concepts.push({
-        weight: concept.weight,
-        original: concept.original
-        })
-}
-result.concepts.sort(weight_sort);
-// пересечение посчитаем?
-var cc = {};
-var cc_chapters = {};
-var level = "lines";
-book.meta.chapters.map(function(chapter) {
-    var cc_one = {};
-    chapter[level+"_paint"].map(function(paint){
-        var hash_paint = {};
-        paint.map(function(x){ hash_paint[x.concept.original] = x.weight });
-        for (var i in book.vocabulary.concepts) for (var j in book.vocabulary.concepts) {
-            var weight = 0;
-            if (hash_paint[i] && hash_paint[j])
-                weight = hash_paint[i] * hash_paint[j];
-            cc_one[i] = cc_one[i] || {};
-            cc[i]     = cc[i] || {};
-            cc_one[i][j]  = cc_one[i][j] || 0;
-            cc[i][j]  = cc[i][j] || 0;
-            cc[i][j] += weight;
-            cc_one[i][j] += weight;
-        }
-    })
-    cc_chapters[chapter.id] = cc_one;
-})
-result.concepts.map(function(concept){
-    var list = [];
-    var cci = cc[concept.original];
-    for (var i in cci) list.push({ original: i, weight: cci[i] });
-    list.sort(weight_sort);
-    concept.other_concepts = list.filter(function(x){ return x.weight > 0 && x.original != concept.original });
-    // texts
-    concept.texts = book.getTextsForConceptsFlat([concept.original], 'lines')
-                        .filter(function(t, i){ return (i < 4 || t.weight > 7) && i < 10});
-    concept.other_concepts.map(function(c){
-        c.texts = book.getTextsForConceptsFlat([concept.original, c.original], 'lines')
-                        .filter(function(t, i){ return (i < 4 || t.weight > 7) && i < 10});
-    }) 
-})
-result.chapters.map(function(chapter){
-    chapter.concepts.map(function(concept_in_chapter){
-        var cci = cc_chapters[ chapter.id ][concept_in_chapter.original];
-        var list = [];
-        for (var i in cci) list.push({ original: i, weight: cci[i] });
-        list.sort(weight_sort);
-        concept_in_chapter.other_concepts = list.filter(function(x){ return x.weight > 0 && x.original != concept.original });
-    })
-})
+bm.renderLibrary()
 
 
 
@@ -364,9 +387,3 @@ result.chapters.map(function(chapter){
 // .map(function(t){
 //     console.log(t.text)
 // })
-
-
-
-var outputName = bm.getDataFilename(book, 'stats.json');
-fs.writeFileSync(outputName, JSON.stringify(result, null, 4), {encoding: 'utf-8'});
-

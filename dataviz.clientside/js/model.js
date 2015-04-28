@@ -18,6 +18,8 @@ ConceptModel.prototype = {
                 return c[ i%c.length ];
             }
         };
+
+
         this._data = data;
         // prepare normalised weights
         this.weighten(this._data.concepts, 1);

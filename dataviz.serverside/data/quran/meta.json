@@ -1,0 +1,15 @@
+{
+    "title" : "Qu'Ran",
+    "author" : "...",
+    "language" : "turkish",
+    "chapters" : [
+        { 
+            "id" : 1, 
+            "title" : "..." 
+        },
+        {
+            "id": 2, 
+            "title": "..."
+        }
+    ]
+}

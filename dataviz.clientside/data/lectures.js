@@ -1,7 +1,8 @@
-var data = {
+window.data = {
     "meta": {
         "title": "Лекции на досках",
-        "author": "Г.П. Щедровицкий"
+        "author": "Г.П. Щедровицкий",
+        "language": "russian"
     },
     "chapters": [
         {
